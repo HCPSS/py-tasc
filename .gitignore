@@ -1,0 +1,12 @@
+.csslintrc
+.jshintrc
+.project
+.pydevproject
+.shifter.json
+.vagrant/
+Vagrantfile
+ansible/
+*.pyc
+moodle/
+manifest.yml
+patches/
