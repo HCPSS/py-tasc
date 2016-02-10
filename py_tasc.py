@@ -10,7 +10,7 @@ options = OptionResolver()
 # Assemble the source code
 assembler = Assembler(options.manifest()["projects"], options.destination(), options.extra_parameters())
 assembler.assemble()
-
+   
 # Apply any patches
 patchmanager = PatchManager(options.manifest()["patches"], options.destination())
 patch_base = os.path.dirname(options.manifest_location())

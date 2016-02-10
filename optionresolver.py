@@ -1,4 +1,4 @@
-import optparse, yaml
+import optparse, yaml, json
 
 class OptionResolver(object):
     """Resolve user input options"""
@@ -44,7 +44,14 @@ class OptionResolver(object):
         """
         
         with open(self.manifest_location(), "r") as stream:
-            return yaml.load(stream)
+            yamlstring = stream.read()
+            
+            # Allow token replacements
+            params = self.extra_parameters()
+            if params:
+                yamlstring = yamlstring.format(**params)
+            
+            return yaml.load(yamlstring)
     
     def destination(self):
         """Get the assembly location
@@ -57,5 +64,7 @@ class OptionResolver(object):
         """Get extra parameters
         :rtype: dict[str, str]
         """
+        params_string = self.parse().extra_parameters
         
-        return self.parse().extra_parameters
+        if params_string:
+            return json.loads(self.parse().extra_parameters)        
