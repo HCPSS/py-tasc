@@ -115,3 +115,7 @@ $ py_tasc.py --manifest=./manifest.yml --destination=./application --extra-param
 **Important:** Note the quotation sequence in the JSON string. This works 
 '{"foo": "bar"}' but this does not "{'foo': 'bar'}". I believe that these are 
 both valid JSON formatted strings, but python does not like the 2nd one.
+
+## License
+
+PyDev is released under the MIT license.
