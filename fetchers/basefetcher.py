@@ -13,5 +13,8 @@ class BaseFetcher(object):
         self.destination = self.project_base
         if params.get("destination"):
             self.destination += "/" + params.get("destination")
+            
+        # De we have a specified rename for the folder?
+        self.rename = None
         if params.get("rename"):
-            self.destination += "/" + params.get("rename")
+            self.rename = params.get("rename")

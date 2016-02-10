@@ -29,8 +29,12 @@ class GitFetcher(BaseFetcher):
         if os.path.exists(templocation + "/.gitignore"):
             os.remove(templocation + "/.gitignore")
             
-        # Move the repo into the final position        
-        copy_tree(templocation, self.destination)
+        # Move the repo into the final position 
+        destination = self.destination
+        if self.rename:
+            destination = destination + "/" + self.rename
+            
+        copy_tree(templocation, destination)
         
         # Clean up
         shutil.rmtree(templocation)

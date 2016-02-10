@@ -1,4 +1,4 @@
-import requests, zipfile, StringIO
+import requests, zipfile, StringIO, shutil
 from basefetcher import BaseFetcher
 
 class ZipFetcher(BaseFetcher):
@@ -9,4 +9,12 @@ class ZipFetcher(BaseFetcher):
         
         request = requests.get(self.source)
         zip = zipfile.ZipFile(StringIO.StringIO(request.content))
-        zip.extractall(path=self.destination)
+        location = zip.extractall(path=self.destination)
+        
+        # The very first thing extracted should be the parent folder. But it
+        # has a slash at the end (because it's a directory). So, let's 
+        # format it a little.
+        original_name = zip.infolist()[0].filename.split("/")[0]
+        if self.rename and self.rename != original_name:
+            shutil.move(self.destination+"/"+original_name, self.destination+"/"+self.rename)
+
