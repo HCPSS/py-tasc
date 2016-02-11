@@ -1,6 +1,6 @@
 import tempfile, shutil, os
 from basefetcher import BaseFetcher
-from git import Repo
+from subprocess import call
 from distutils.dir_util import copy_tree
 
 class GitFetcher(BaseFetcher):
@@ -21,8 +21,11 @@ class GitFetcher(BaseFetcher):
         # We need a place to store the repo temporarily
         templocation = tempfile.mkdtemp()
         
-        # Clone the repo
-        Repo.clone_from(self.source, templocation, branch=self.tag)
+        # Clone the repo        
+        call(["git", "clone", self.source, templocation])
+        
+        # Checkout the correct tag or branch
+        call(["git", "-C", templocation, "checkout", self.tag])
         
         # Delete the .git folder and .gitignore file
         shutil.rmtree(templocation + "/.git")
