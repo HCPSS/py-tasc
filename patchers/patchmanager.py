@@ -27,7 +27,10 @@ class PatchManager(object):
     
     def patch(self):
         """Perform the patches"""
-        for patch in self.patches:
-            patcher = self.get_patcher("patch_file")
-            patcher.patch(self.project_base, patch["destination"], patch["source"])
-    
+        
+        try:
+            for patch in self.patches:
+                patcher = self.get_patcher("patch_file")
+                patcher.patch(self.project_base, patch["destination"], patch["source"])
+        except TypeError, te:
+            pass
